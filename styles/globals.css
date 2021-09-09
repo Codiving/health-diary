@@ -2,7 +2,7 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+  font-family: -apple-system, ONE-Mobile-POP, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
@@ -13,8 +13,17 @@ a {
 
 * {
   box-sizing: border-box;
+  font-family: -apple-system, ONE-Mobile-POP, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+  Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
 ul {
   list-style: none;
+}
+
+@font-face {
+  font-family: 'ONE-Mobile-POP';
+  src: url('/fonts/ONE_Mobile_POP_OTF.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
 }
