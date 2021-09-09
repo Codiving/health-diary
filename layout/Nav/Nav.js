@@ -27,7 +27,7 @@ const Nav = props => {
               Exercise Diary
             </a>
           </Link>
-          <Link href="/home">
+          <Link href="/">
             <a style={{ fontSize: "1.3rem" }}>Home</a>
           </Link>
         </Li>
