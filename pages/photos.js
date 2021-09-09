@@ -1,4 +1,4 @@
-import HeadInfo from "../components/HeadInfo";
+import { HeadInfo } from "layout";
 
 const photos = props => {
   return (
