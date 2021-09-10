@@ -5,6 +5,7 @@ const Exercise = styled.div`
   margin: 30px 0;
   max-width: 800px;
   width: 100%;
+  overflow-x: scroll;
 `;
 
 const H3 = styled.h3`

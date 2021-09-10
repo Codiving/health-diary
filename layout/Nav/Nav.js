@@ -8,6 +8,14 @@ const Navigation = styled.nav`
 
 const Ul = styled.ul`
   display: flex;
+
+  @media (min-width: 481px) and (max-width: 767px) {
+    display: flex;
+  }
+
+  @media (min-width: 320px) and (max-width: 480px) {
+    display: none;
+  }
 `;
 
 const Li = styled.li`

@@ -1,9 +1,9 @@
-export const dayTexts = ["일", "월", "화", "수", "목", "금", "토"];
-export const MONTH = "MONTH";
-export const YEAR = "YEAR";
-export const DECADE = "DECADE";
+const dayTexts = ["일", "월", "화", "수", "목", "금", "토"];
+const MONTH = "MONTH";
+const YEAR = "YEAR";
+const DECADE = "DECADE";
 
-export const getDaysInMonthMode /* d: Luxon => [d: Luxon] */ = date =>
+const getDaysInMonthMode /* d: Luxon => [d: Luxon] */ = date =>
   Array(42)
     .fill()
     .map((_, i) =>
@@ -14,26 +14,26 @@ export const getDaysInMonthMode /* d: Luxon => [d: Luxon] */ = date =>
     );
 // .filter((d, i) => i < 35 || d.startOf('week').month === date.month);
 
-export const getMonthsInYearMode /* d: Luxon => [d: Luxon] */ = date =>
+const getMonthsInYearMode /* d: Luxon => [d: Luxon] */ = date =>
   Array(12)
     .fill()
     .map((_, i) => date.startOf("year").plus({ months: i }));
 
-export const getYearsInDecadeMode /* d: Luxon => [d: Luxon] */ = date => {
+const getYearsInDecadeMode /* d: Luxon => [d: Luxon] */ = date => {
   const startYear = Math.floor(date.year / 10) * 10 - 1;
   return Array(12)
     .fill()
     .map((_, i) => date.set({ year: startYear + i }).startOf("year"));
 };
 
-export const getDecadeModeTitle /* d: Luxon => string */ = date => {
+const getDecadeModeTitle /* d: Luxon => string */ = date => {
   const startYear = Math.floor(date.year / 10) * 10 - 1;
   return `${startYear}-${startYear + 11}`;
 };
 
-export const roundTen /* number => number */ = x => Math.floor(x / 10) * 10;
+const roundTen /* number => number */ = x => Math.floor(x / 10) * 10;
 
-export const getDifferenceByMode /* Mode => object */ = mode =>
+const getDifferenceByMode /* Mode => object */ = mode =>
   mode === MONTH
     ? { months: 1 }
     : mode === YEAR
@@ -42,12 +42,25 @@ export const getDifferenceByMode /* Mode => object */ = mode =>
     ? { years: 10 }
     : { days: 0 };
 
-export const getNextMode /* Mode => Mode */ = mode => {
+const getNextMode /* Mode => Mode */ = mode => {
   const nextModeMap = {
     [MONTH]: YEAR,
     [YEAR]: DECADE,
     [DECADE]: MONTH
   };
-  console.log("mode", nextModeMap, mode);
   return nextModeMap[mode];
+};
+
+export {
+  dayTexts,
+  MONTH,
+  YEAR,
+  DECADE,
+  getDaysInMonthMode,
+  getMonthsInYearMode,
+  getYearsInDecadeMode,
+  getDecadeModeTitle,
+  roundTen,
+  getDifferenceByMode,
+  getNextMode
 };
