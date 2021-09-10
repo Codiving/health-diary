@@ -1,16 +1,16 @@
+import { DateTime as DT } from "luxon";
 import * as React from "react";
 import styled from "styled-components";
-import { DateTime as DT } from "luxon";
-import Weekdays from "./Weekdays";
 import {
-  MONTH,
-  YEAR,
   DECADE,
   getDaysInMonthMode,
   getMonthsInYearMode,
   getYearsInDecadeMode,
-  roundTen
+  MONTH,
+  roundTen,
+  YEAR
 } from "./utils";
+import Weekdays from "./Weekdays";
 
 const FlexLayout = styled.div`
   display: flex;
@@ -89,7 +89,13 @@ const DateDisplay = ({
               >
                 {d.toFormat("d")}
               </DateItem>
-              <BlockItem isSelected={dates.includes(d.toFormat("yyyyMMdd"))} />
+              <BlockItem
+                onClick={e => {
+                  e.stopPropagation();
+                  onSelect(true);
+                }}
+                isSelected={dates.includes(d.toFormat("yyyyMMdd"))}
+              />
             </DateWrap>
           ))}
         {mode === YEAR &&

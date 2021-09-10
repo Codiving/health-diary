@@ -1,6 +1,7 @@
 import { Calendar, ExerciseTable } from "components";
-import { exercises } from "../data";
+import { useState } from "react";
 import styled from "styled-components";
+import { exercises } from "../data";
 
 const Main = styled.div`
   padding: 0 0.5rem;
@@ -11,10 +12,16 @@ const Main = styled.div`
 `;
 
 const Home = () => {
+  const [inputOpen, setInputOpen] = useState(false);
+
   return (
     <Main>
-      <Calendar exercises={exercises} />
-      <ExerciseTable exercises={exercises} />
+      <Calendar exercises={exercises} onSelect={() => setInputOpen(true)} />
+      <ExerciseTable
+        exercises={exercises}
+        open={inputOpen}
+        onClose={() => setInputOpen(false)}
+      />
     </Main>
   );
 };

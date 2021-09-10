@@ -1,11 +1,11 @@
-import { useState, useCallback } from "react";
-import styled from "styled-components";
 import { DateTime as DT } from "luxon";
-import SwitchButton from "./SwitchButton";
+import { useCallback, useState } from "react";
+import styled from "styled-components";
+import DateDisplay from "./DateDisplay";
 import NextButton from "./NextButton";
 import PrevButton from "./PrevButton";
-import DateDisplay from "./DateDisplay";
-import { MONTH, getDifferenceByMode, getNextMode } from "./utils";
+import SwitchButton from "./SwitchButton";
+import { getDifferenceByMode, getNextMode, MONTH } from "./utils";
 
 const CalendarWrapper = styled.div`
   max-width: 800px;
@@ -32,11 +32,7 @@ const Summary = styled.summary`
 `;
 
 const Calendar = props => {
-  const {
-    date = null /*: Object | string  */,
-    onSelect /*: date => any  */,
-    exercises
-  } = props;
+  const { date = null /*: Object | string  */, onSelect, exercises } = props;
   const dates = exercises.map(item => new Date(item.date.substring(0, 10)));
 
   const today = DT.fromJSDate(new Date()).startOf("day");
@@ -65,11 +61,7 @@ const Calendar = props => {
 
   return (
     <CalendarWrapper>
-      <details
-        onClick={() => {
-          console.log("# 111");
-        }}
-      >
+      <details>
         <Summary
           onClick={e => {
             e.stopPropagation();

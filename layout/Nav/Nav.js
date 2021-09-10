@@ -8,19 +8,21 @@ const Navigation = styled.nav`
 
 const Ul = styled.ul`
   display: flex;
-
-  @media (min-width: 481px) and (max-width: 767px) {
-    display: flex;
-  }
-
-  @media (min-width: 320px) and (max-width: 480px) {
-    display: none;
-  }
 `;
 
 const Li = styled.li`
   margin-right: 1rem;
   color: #fff;
+
+  @media (min-width: 478px) and (max-width: 767px) {
+  }
+
+  @media (min-width: 320px) and (max-width: 477px) {
+    & > a:nth-child(2),
+    & > a:nth-child(3) {
+      display: none;
+    }
+  }
 `;
 
 const Nav = props => {
