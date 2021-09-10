@@ -1,17 +1,22 @@
-import { Calendar } from "components";
+import { Calendar, ExerciseTable } from "components";
+import { exercises } from "../data";
+import styled from "styled-components";
 
-export default function Home() {
+const Main = styled.div`
+  padding: 0 0.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Home = () => {
   return (
-    <div
-      style={{
-        padding: "0 0.5rem",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center"
-      }}
-    >
-      <Calendar />
-    </div>
+    <Main>
+      <Calendar exercises={exercises} />
+      <ExerciseTable exercises={exercises} />
+    </Main>
   );
-}
+};
+
+export default Home;

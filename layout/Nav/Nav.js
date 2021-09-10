@@ -28,7 +28,10 @@ const Nav = props => {
             </a>
           </Link>
           <Link href="/">
-            <a style={{ fontSize: "1.3rem" }}>Home</a>
+            <a style={{ fontSize: "1.3rem", marginRight: "1rem" }}>Home</a>
+          </Link>
+          <Link href="/diet">
+            <a style={{ fontSize: "1.3rem" }}>Diet</a>
           </Link>
         </Li>
       </Ul>

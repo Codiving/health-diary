@@ -31,18 +31,14 @@ const Summary = styled.summary`
   color: white;
 `;
 
-const Calendar = ({
-  date = null /*: Object | string  */,
-  dates = [
-    new Date("2021-09-08"),
-    new Date("2021-09-09"),
-    new Date("2021-09-10"),
-    new Date("2021-09-16"),
-    new Date("2021-09-17"),
-    new Date("2021-09-18")
-  ],
-  onSelect /*: date => any  */
-}) => {
+const Calendar = props => {
+  const {
+    date = null /*: Object | string  */,
+    onSelect /*: date => any  */,
+    exercises
+  } = props;
+  const dates = exercises.map(item => new Date(item.date));
+
   const today = DT.fromJSDate(new Date()).startOf("day");
 
   const [mode, setMode] = useState(MONTH);
