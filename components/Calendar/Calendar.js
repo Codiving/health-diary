@@ -37,7 +37,7 @@ const Calendar = props => {
     onSelect /*: date => any  */,
     exercises
   } = props;
-  const dates = exercises.map(item => new Date(item.date));
+  const dates = exercises.map(item => new Date(item.date.substring(0, 10)));
 
   const today = DT.fromJSDate(new Date()).startOf("day");
 

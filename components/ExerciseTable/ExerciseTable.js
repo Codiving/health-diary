@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useState } from "react";
 
 const Exercise = styled.div`
   margin: 30px 0;
@@ -7,7 +8,8 @@ const Exercise = styled.div`
 `;
 
 const H3 = styled.h3`
-  margin: 1rem 0 0.5rem;
+  margin: 0 1rem 0 0;
+  // margin: 1rem 1rem 0 0.5rem;
 `;
 
 const Table = styled.table`
@@ -25,16 +27,34 @@ const Td = styled.td`
   padding: 0.3rem;
 `;
 
+const Button = styled.button`
+  background: #f8f0df;
+  border: 1px solid #9d9d9d;
+  border-radius: 8px;
+  height: 2rem;
+`;
+
 const ExerciseTable = props => {
   const { exercises } = props;
+  const [diet, setDiet] = useState(false);
+
   return (
     <Exercise>
       {exercises.map(item => {
         const { date, exercise, order } = item;
 
         return (
-          <div key={date}>
-            <H3>{date}</H3>
+          <div key={date} style={{ marginBottom: 30 }}>
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <H3>{date}</H3>
+              <Button
+                onClick={() => {
+                  console.log("호로");
+                }}
+              >
+                식단보기
+              </Button>
+            </div>
             <Table>
               <thead>
                 <tr>
@@ -66,6 +86,8 @@ const ExerciseTable = props => {
                 })}
               </tbody>
             </Table>
+
+            {diet && <div>식단 사진</div>}
           </div>
         );
       })}
