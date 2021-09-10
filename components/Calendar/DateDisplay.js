@@ -1,5 +1,5 @@
 import { DateTime as DT } from "luxon";
-import * as React from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import {
   DECADE,
@@ -62,15 +62,20 @@ const BlockItem = styled.div`
   opacity: 0.5;
 `;
 
-const DateDisplay = ({
-  onSelect,
-  mode,
-  setMode,
-  cursorDate,
-  setCursorDate,
-  selectedDates
-}) => {
+const DateDisplay = props => {
+  const {
+    onSelect,
+    mode,
+    setMode,
+    cursorDate,
+    setCursorDate,
+    selectedDates,
+    onClickNext,
+    onClickPrev
+  } = props;
   const dates = selectedDates.map(date => date.toFormat("yyyyMMdd"));
+
+  const [prevTouch, setPrevTouch] = useState(null);
 
   return (
     <div>
@@ -93,6 +98,20 @@ const DateDisplay = ({
                 onClick={e => {
                   e.stopPropagation();
                   onSelect(true);
+                }}
+                onTouchStart={e => {
+                  setPrevTouch({
+                    x: e.changedTouches[0].pageX,
+                    y: e.changedTouches[0].pageY
+                  });
+                }}
+                onTouchEnd={e => {
+                  const distanceX = prevTouch.x - e.changedTouches[0].pageX;
+
+                  if (distanceX < -30) onClickPrev();
+                  if (distanceX > 30) onClickNext();
+
+                  setPrevTouch(null);
                 }}
                 isSelected={dates.includes(d.toFormat("yyyyMMdd"))}
               />

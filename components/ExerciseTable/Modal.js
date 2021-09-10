@@ -41,7 +41,6 @@ const Modal = props => {
       <ModalBox
         onClick={e => {
           e.stopPropagation();
-          console.log(" # 333");
         }}
       ></ModalBox>
     </ModalWrap>

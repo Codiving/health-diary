@@ -86,6 +86,8 @@ const Calendar = props => {
           cursorDate={cursorDate}
           setCursorDate={setCursorDate}
           selectedDates={selectedDates}
+          onClickNext={onClickNext}
+          onClickPrev={onClickPrev}
         />
       </details>
     </CalendarWrapper>
