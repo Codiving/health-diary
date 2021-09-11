@@ -1,5 +1,7 @@
 import { useCallback, useState } from "react";
 import styled from "styled-components";
+import DietImage from "./DietImage";
+import Memo from "./Memo";
 
 const H3 = styled.h3`
   margin: 0 1rem 0 0;
@@ -26,19 +28,23 @@ const Button = styled.button`
   border: 1px solid #9d9d9d;
   border-radius: 8px;
   height: 2rem;
+  margin-right: 0.3rem;
 `;
 
 const Diary = props => {
-  const { date, exercise, order } = props;
+  const { date, exercise, order, memo: exerciseMemo } = props;
 
   const [diet, setDiet] = useState(false);
+  const [memo, setMemo] = useState(false);
 
   const handleDiet = useCallback(() => setDiet(prev => !prev), []);
+  const handleMemo = useCallback(() => setMemo(prev => !prev), []);
 
   return (
     <div key={date} style={{ marginBottom: 30 }}>
       <div style={{ display: "flex", alignItems: "center" }}>
         <H3>{date}</H3>
+        <Button onClick={handleMemo}>{`메모 ${memo ? "접기" : "보기"}`}</Button>
         <Button onClick={handleDiet}>{`식단 ${diet ? "접기" : "보기"}`}</Button>
       </div>
       <Table>
@@ -71,7 +77,8 @@ const Diary = props => {
         </tbody>
       </Table>
 
-      {diet && <div>식단 사진</div>}
+      {memo && <Memo memos={exerciseMemo} />}
+      {diet && <DietImage />}
     </div>
   );
 };

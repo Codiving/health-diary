@@ -5,6 +5,7 @@ const shoulderPressMachine = "shoulderPressMachine";
 const hammerCurl = "hammerCurl";
 const flyMachine = "flyMachine";
 const dumbbellCurl = "dumbbellCurl";
+const dips = "dips";
 
 const exercises = [
   {
@@ -109,7 +110,8 @@ const exercises = [
         }
       ]
     },
-    order: [squat, latPullDown, benchPress, shoulderPressMachine]
+    order: [squat, latPullDown, benchPress, shoulderPressMachine],
+    memo: []
   },
   {
     date: "2021-09-07 (화)",
@@ -267,7 +269,8 @@ const exercises = [
       shoulderPressMachine,
       hammerCurl,
       dumbbellCurl
-    ]
+    ],
+    memo: []
   },
   {
     date: "2021-09-10 (금)",
@@ -376,7 +379,182 @@ const exercises = [
         }
       ]
     },
-    order: [squat, latPullDown, benchPress, hammerCurl]
+    order: [squat, latPullDown, benchPress, hammerCurl],
+    memo: []
+  },
+  {
+    date: "2021-09-11 (토)",
+    exercise: {
+      squat: [
+        {
+          kg: 20,
+          count: 15,
+          times: 1
+        },
+        {
+          kg: 40,
+          count: 15,
+          times: 1
+        },
+        {
+          kg: 40,
+          count: 15,
+          times: 1
+        },
+        {
+          kg: 50,
+          count: 12,
+          times: 1
+        },
+        {
+          kg: 50,
+          count: 12,
+          times: 1
+        },
+        {
+          kg: 60,
+          count: 4,
+          times: 1
+        }
+      ],
+      latPullDown: [
+        {
+          kg: 35,
+          count: 12,
+          times: 1
+        },
+        {
+          kg: 35,
+          count: 8,
+          times: 1
+        },
+        {
+          kg: 35,
+          count: 12,
+          times: 2
+        }
+      ],
+      benchPress: [
+        {
+          kg: 20,
+          count: 15,
+          times: 1
+        },
+        {
+          kg: 30,
+          count: 15,
+          times: 1
+        },
+        {
+          kg: 40,
+          count: 12,
+          times: 1
+        },
+        {
+          kg: 40,
+          count: 12,
+          times: 1
+        },
+        {
+          kg: 50,
+          count: 4,
+          times: 1
+        }
+      ],
+      dips: [
+        {
+          kg: 80,
+          count: 12,
+          times: 1
+        },
+        {
+          kg: 80,
+          count: 12,
+          times: 1
+        },
+        {
+          kg: 80,
+          count: 12,
+          times: 1
+        }
+      ],
+      hammerCurl: [
+        {
+          kg: 4,
+          count: 15,
+          times: 1
+        },
+        {
+          kg: 6,
+          count: 15,
+          times: 2
+        },
+        {
+          kg: 6,
+          count: 15,
+          times: 2
+        },
+        {
+          kg: 6,
+          count: 15,
+          times: 2
+        }
+      ],
+      shoulderPressMachine: [
+        {
+          kg: 70,
+          count: 15,
+          times: 1
+        },
+        {
+          kg: 80,
+          count: 15,
+          times: 1
+        },
+        {
+          kg: 80,
+          count: 15,
+          times: 1
+        },
+        {
+          kg: 90,
+          count: 15,
+          times: 1
+        }
+      ],
+      flyMachine: [
+        {
+          kg: 70,
+          count: 15,
+          times: 1
+        },
+        {
+          kg: 80,
+          count: 12,
+          times: 1
+        },
+        {
+          kg: 80,
+          count: 15,
+          times: 1
+        },
+        {
+          kg: 90,
+          count: 4,
+          times: 1
+        }
+      ]
+    },
+    order: [
+      squat,
+      benchPress,
+      flyMachine,
+      dips,
+      latPullDown,
+      shoulderPressMachine,
+      hammerCurl
+    ],
+    memo: ["Fly 같은 경우 느낌이 안난다 ..."]
   }
 ];
 
