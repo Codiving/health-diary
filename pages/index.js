@@ -1,5 +1,6 @@
 import { Calendar, ExerciseTable } from "components";
-import { useState } from "react";
+import { MONTH } from "components/Calendar/utils";
+import { useCallback, useState } from "react";
 import styled from "styled-components";
 import { exercises } from "../data";
 
@@ -13,15 +14,27 @@ const Main = styled.div`
 
 const Home = () => {
   const [inputOpen, setInputOpen] = useState(false);
+  const [mode, setMode] = useState(MONTH);
+
+  const onHandleMode = useCallback(newMode => {
+    setMode(newMode);
+  }, []);
 
   return (
     <Main>
-      <Calendar exercises={exercises} onSelect={() => setInputOpen(true)} />
-      <ExerciseTable
+      <Calendar
         exercises={exercises}
-        open={inputOpen}
-        onClose={() => setInputOpen(false)}
+        onSelect={() => setInputOpen(true)}
+        mode={mode}
+        onHandleMode={onHandleMode}
       />
+      {mode === MONTH && (
+        <ExerciseTable
+          exercises={exercises}
+          open={inputOpen}
+          onClose={() => setInputOpen(false)}
+        />
+      )}
     </Main>
   );
 };

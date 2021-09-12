@@ -32,12 +32,11 @@ const Summary = styled.summary`
 `;
 
 const Calendar = props => {
-  const { date = null /*: Object | string  */, onSelect, exercises } = props;
+  const { date = null, onSelect, exercises, mode, onHandleMode } = props;
   const dates = exercises.map(item => new Date(item.date.substring(0, 10)));
 
   const today = DT.fromJSDate(new Date()).startOf("day");
 
-  const [mode, setMode] = useState(MONTH);
   const [cursorDate, setCursorDate] = useState(
     date ? DT.fromJSDate(date) : today
   );
@@ -51,8 +50,8 @@ const Calendar = props => {
   }, [setCursorDate, mode, cursorDate]);
 
   const onClickSwitch = useCallback(() => {
-    setMode(getNextMode(mode));
-  }, [setMode, mode]);
+    onHandleMode(getNextMode(mode));
+  }, [onHandleMode, mode]);
 
   const onClickNext = useCallback(() => {
     setCursorDate(cursorDate.plus(getDifferenceByMode(mode)));
@@ -81,7 +80,7 @@ const Calendar = props => {
         <DateDisplay
           onSelect={onSelect}
           mode={mode}
-          setMode={setMode}
+          setMode={onHandleMode}
           cursorDate={cursorDate}
           setCursorDate={setCursorDate}
           selectedDates={selectedDates}

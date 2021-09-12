@@ -108,8 +108,8 @@ const DateDisplay = props => {
                 onTouchEnd={e => {
                   const distanceX = prevTouch.x - e.changedTouches[0].pageX;
 
-                  if (distanceX < -30) onClickPrev();
-                  if (distanceX > 30) onClickNext();
+                  if (distanceX < -150) onClickPrev();
+                  if (distanceX > 150) onClickNext();
 
                   setPrevTouch(null);
                 }}
