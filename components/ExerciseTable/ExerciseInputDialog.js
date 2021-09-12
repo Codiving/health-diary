@@ -1,7 +1,12 @@
-import styled from "styled-components";
-import { useState } from "react";
+import { getDaysInMonthMode } from "components/Calendar/utils";
+import { DataContext } from "context";
+import { exercises } from "data";
 import produce from "immer";
-import { FirstChartUpperCase } from "utils/text";
+import { DateTime as DT } from "luxon";
+import { execOnce } from "next/dist/shared/lib/utils";
+import { useContext, useEffect, useState } from "react";
+import styled from "styled-components";
+import { DateText, FirstChartUpperCase } from "utils/text";
 
 const exercisesSetting = [
   "squat",
@@ -37,7 +42,7 @@ const ModalBox = styled.div`
   border-radius: 8px;
   max-width: 800px;
   width: 100%;
-  height: 800px;
+  height: 860px;
 `;
 
 const Title = styled.div`
@@ -54,7 +59,7 @@ const H3 = styled.h3`
 const MainInput = styled.div`
   background-color: #eceff1;
   padding: 15px;
-  height: 690px;
+  height: 750px;
 `;
 
 const Summary = styled.summary`
@@ -178,22 +183,52 @@ const CloseBtn = {
   boxShadow: "rgb(0 0 0 / 24%) 0px 3px 8px"
 };
 
-const item = {
-  kg: 20,
+const initItem = {
+  kg: 0,
   count: 15,
   times: 1
 };
 
-const Modal = props => {
-  const { date: upperDate = "2021년-3월-15일 (토)", onClose } = props;
+const initValue = {
+  date: null,
+  exercise: {},
+  memo: []
+};
 
-  const [diary, setDiary] = useState({
-    date: upperDate,
-    exercises: {},
-    memos: []
-  });
+const ExerciseInputDialog = props => {
+  const { date: upperDate, onClose } = props;
+  const { dataContext } = useContext(DataContext);
 
-  const { date, exercises, memos } = diary;
+  const [diary, setDiary] = useState({ ...initValue, date: upperDate });
+  const [modify, setModify] = useState(false);
+
+  const { date, exercise, memo } = diary;
+
+  useEffect(() => {
+    const date_1 = DT.fromMillis(upperDate).toFormat("yyyyMMdd");
+    const result = dataContext.value.find(item => {
+      const date_2 = DT.fromMillis(item.date).toFormat("yyyyMMdd");
+      return date_1 === date_2;
+    });
+    // let newExercise = {};
+
+    // if (Boolean(result)) {
+    //   const { exercise } = result;
+    //   const keys = Object.keys(exercise);
+    //   keys.forEach(item => {
+    //     const length = 7 - exercise[item].length;
+    //     const concatArray = Array(length)
+    //       .fill()
+    //       .map(() => initItem);
+
+    //     newExercise[item] = exercise[item].concat(concatArray);
+    //   });
+
+    //   console.log("####", newExercise);
+    // }
+    setDiary(result ? result : { ...initValue, date: upperDate });
+    setModify(result ? true : false);
+  }, [dataContext, upperDate]);
 
   return (
     <ModalWrap>
@@ -209,7 +244,9 @@ const Modal = props => {
         }}
       >
         <Title>
-          <H3>{date}</H3>
+          <H3>
+            {date && DateText(date)} {modify ? "- 수정" : "- 생성"}
+          </H3>
           <Icon
             onClick={() => {
               onClose();
@@ -222,17 +259,18 @@ const Modal = props => {
             <Details>
               <Summary>운동 리스트</Summary>
               <ExerciseListWrap>
-                {exercisesSetting.map(exercise => {
+                {exercisesSetting.map(item => {
                   return (
-                    <ExerciseWrap key={exercise}>
+                    <ExerciseWrap key={item}>
                       <Checkbox
                         type="checkbox"
-                        name={exercise}
-                        value={exercise}
-                        onClick={e => {
+                        name={item}
+                        value={item}
+                        checked={Object.keys(exercise).includes(item)}
+                        onChange={e => {
                           const { value, checked } = e.target;
 
-                          const newExercises = produce(exercises, draft => {
+                          const newExercises = produce(exercise, draft => {
                             if (!checked) {
                               delete draft[value];
                               return draft;
@@ -245,26 +283,24 @@ const Modal = props => {
 
                           setDiary(prev => ({
                             ...prev,
-                            exercises: newExercises
+                            exercise: newExercises
                           }));
                         }}
                       />
-                      <ExerciseText>
-                        {FirstChartUpperCase(exercise)}
-                      </ExerciseText>
+                      <ExerciseText>{FirstChartUpperCase(item)}</ExerciseText>
                     </ExerciseWrap>
                   );
                 })}
               </ExerciseListWrap>
             </Details>
 
-            {Boolean(Object.keys(exercises).length) && (
+            {exercise && Boolean(Object.keys(exercise).length) && (
               <>
                 <InputDescription>(Kg / Count / Times)</InputDescription>
 
                 <InputWrap>
-                  {Object.keys(exercises).map(item => {
-                    const list = exercises[item];
+                  {Object.keys(exercise).map(item => {
+                    const list = exercise[item];
 
                     return (
                       <InputInner key={item}>
@@ -303,46 +339,47 @@ const Modal = props => {
               <MemoDescription>Memo</MemoDescription>
               <Icon
                 onClick={() => {
-                  if (memos.length >= 3) return;
+                  if (memo.length >= 3) return;
                   setDiary(prev => ({
                     ...prev,
-                    memos: prev.memos.concat("")
+                    memo: prev.memo.concat("")
                   }));
                 }}
                 src="/icons/plusIcon.svg"
               />
             </div>
-            {memos.map((memo, idx) => {
-              return (
-                <MemoWrap key={idx}>
-                  <MemoInput
-                    value={memo}
-                    onChange={e => {
-                      const { value } = e.target;
-                      const newMemos = produce(memos, draft => {
-                        draft[idx] = value;
-                      });
-                      setDiary(prev => ({
-                        ...prev,
-                        memos: newMemos
-                      }));
-                    }}
-                  />
-                  <Icon
-                    onClick={() => {
-                      const newMemos = memos.filter(
-                        (_, index) => index !== idx
-                      );
-                      setDiary(prev => ({
-                        ...prev,
-                        memos: newMemos
-                      }));
-                    }}
-                    src="/icons/removeIcon.svg"
-                  />
-                </MemoWrap>
-              );
-            })}
+            {memo &&
+              memo.map((item, idx) => {
+                return (
+                  <MemoWrap key={idx}>
+                    <MemoInput
+                      value={item}
+                      onChange={e => {
+                        const { value } = e.target;
+                        const newMemos = produce(memo, draft => {
+                          draft[idx] = value;
+                        });
+                        setDiary(prev => ({
+                          ...prev,
+                          memo: newMemos
+                        }));
+                      }}
+                    />
+                    <Icon
+                      onClick={() => {
+                        const newMemos = memo.filter(
+                          (_, index) => index !== idx
+                        );
+                        setDiary(prev => ({
+                          ...prev,
+                          memo: newMemos
+                        }));
+                      }}
+                      src="/icons/removeIcon.svg"
+                    />
+                  </MemoWrap>
+                );
+              })}
           </MemoContainer>
         </MainInput>
         <ButtonWrap>
@@ -361,4 +398,4 @@ const Modal = props => {
   );
 };
 
-export default Modal;
+export default ExerciseInputDialog;

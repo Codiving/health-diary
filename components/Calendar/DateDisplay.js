@@ -97,7 +97,7 @@ const DateDisplay = props => {
               <BlockItem
                 onClick={e => {
                   e.stopPropagation();
-                  onSelect(true);
+                  onSelect(d.ts);
                 }}
                 onTouchStart={e => {
                   setPrevTouch({

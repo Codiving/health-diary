@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 import styled from "styled-components";
-import { FirstChartUpperCase } from "utils/text";
+import { DateText, FirstChartUpperCase } from "utils/text";
 import DietImage from "./DietImage";
 import Memo from "./Memo";
 
@@ -44,7 +44,7 @@ const Diary = props => {
   return (
     <div key={date} style={{ marginBottom: 30 }}>
       <div style={{ display: "flex", alignItems: "center" }}>
-        <H3>{date}</H3>
+        <H3>{date && DateText(date)}</H3>
         <Button onClick={handleMemo}>{`메모 ${memo ? "접기" : "보기"}`}</Button>
         <Button onClick={handleDiet}>{`식단 ${diet ? "접기" : "보기"}`}</Button>
       </div>

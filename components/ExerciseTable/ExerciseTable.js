@@ -1,27 +1,29 @@
+import { DataContext } from "context";
+import { useContext } from "react";
 import styled from "styled-components";
 import Diary from "./Diary";
-import Modal from "./Modal";
+import ExerciseInputDialog from "./ExerciseInputDialog";
 
 const Exercise = styled.div`
   margin: 30px 0;
   max-width: 800px;
   width: 100%;
   overflow-x: auto;
-  // overflow-x: scroll;
 `;
 
 const ExerciseTable = props => {
-  const { exercises, open, onClose } = props;
+  const { open, onClose } = props;
+  const { dataContext } = useContext(DataContext);
 
   return (
     <>
       <Exercise>
-        {exercises.map((item, index) => {
+        {dataContext.value.map((item, index) => {
           return <Diary key={index} {...item} />;
         })}
       </Exercise>
 
-      {open && <Modal onClose={onClose} />}
+      {open && <ExerciseInputDialog date={open} onClose={onClose} />}
     </>
   );
 };

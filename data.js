@@ -9,7 +9,7 @@ const dips = "dips";
 
 const exercises = [
   {
-    date: "2021-09-06 (일)",
+    date: 1630886400000,
     exercise: {
       squat: [
         {
@@ -114,7 +114,7 @@ const exercises = [
     memo: []
   },
   {
-    date: "2021-09-07 (화)",
+    date: 1630972800000,
     exercise: {
       benchPress: [
         {
@@ -273,7 +273,7 @@ const exercises = [
     memo: []
   },
   {
-    date: "2021-09-10 (금)",
+    date: 1631232000000,
     exercise: {
       squat: [
         {
@@ -383,7 +383,7 @@ const exercises = [
     memo: []
   },
   {
-    date: "2021-09-11 (토)",
+    date: 1631318400000,
     exercise: {
       squat: [
         {

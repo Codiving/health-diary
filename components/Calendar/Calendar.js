@@ -1,11 +1,12 @@
 import { DateTime as DT } from "luxon";
-import { useCallback, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import DateDisplay from "./DateDisplay";
 import NextButton from "./NextButton";
 import PrevButton from "./PrevButton";
 import SwitchButton from "./SwitchButton";
 import { getDifferenceByMode, getNextMode, MONTH } from "./utils";
+import { DataContext } from "context";
 
 const CalendarWrapper = styled.div`
   max-width: 800px;
@@ -32,17 +33,16 @@ const Summary = styled.summary`
 `;
 
 const Calendar = props => {
-  const { date = null, onSelect, exercises, mode, onHandleMode } = props;
-  const dates = exercises.map(item => new Date(item.date.substring(0, 10)));
-
-  const today = DT.fromJSDate(new Date()).startOf("day");
+  const { date = null, onSelect, mode, onHandleMode } = props;
+  const { dataContext } = useContext(DataContext);
 
   const [cursorDate, setCursorDate] = useState(
-    date ? DT.fromJSDate(date) : today
+    date ? DT.fromJSDate(date) : DT.fromJSDate(new Date()).startOf("day")
   );
-  const [selectedDates] = useState(
-    dates ? dates.map(date => DT.fromJSDate(date)) : today
-  );
+  const [selectedDates, setSelectedDates] = useState([
+    DT.fromJSDate(new Date()).startOf("day")
+  ]);
+
   const [open, setOpen] = useState(true);
 
   const onClickPrev = useCallback(() => {
@@ -56,6 +56,13 @@ const Calendar = props => {
   const onClickNext = useCallback(() => {
     setCursorDate(cursorDate.plus(getDifferenceByMode(mode)));
   }, [setCursorDate, mode, cursorDate]);
+
+  useEffect(() => {
+    const dates = dataContext.value.map(item => new Date(item.date));
+    setSelectedDates(prev =>
+      dates ? dates.map(date => DT.fromJSDate(date)) : prev
+    );
+  }, [dataContext]);
 
   return (
     <CalendarWrapper>
