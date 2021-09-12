@@ -23,10 +23,6 @@ const Weekdays = () => (
     {days.map(day => {
       return <div key={day}>{day}</div>;
     })}
-    {/* {Info.weekdays("short").map((weekDay, i) => {
-      console.log(weekDay);
-      return <div key={i}>{weekDay.slice(0, 2)}</div>;
-    })} */}
   </WeekdaysWrapper>
 );
 
