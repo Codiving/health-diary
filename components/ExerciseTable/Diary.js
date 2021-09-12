@@ -1,5 +1,6 @@
 import { useCallback, useState } from "react";
 import styled from "styled-components";
+import { FirstChartUpperCase } from "utils/text";
 import DietImage from "./DietImage";
 import Memo from "./Memo";
 
@@ -60,7 +61,7 @@ const Diary = props => {
 
             return (
               <tr key={item}>
-                <Td>{item.charAt(0).toUpperCase() + item.slice(1)}</Td>
+                <Td>{FirstChartUpperCase(item)}</Td>
                 {exercise[item].map((el, idx) => {
                   return (
                     <Td key={idx}>{`${el.kg}/${el.count}/${el.times}`}</Td>
