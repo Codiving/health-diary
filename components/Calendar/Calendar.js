@@ -44,8 +44,7 @@ const Calendar = props => {
   const [selectedDates] = useState(
     dates ? dates.map(date => DT.fromJSDate(date)) : today
   );
-
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
 
   const onClickPrev = useCallback(() => {
     setCursorDate(cursorDate.minus(getDifferenceByMode(mode)));
@@ -61,7 +60,7 @@ const Calendar = props => {
 
   return (
     <CalendarWrapper>
-      <details>
+      <details open>
         <Summary
           onClick={e => {
             e.stopPropagation();
